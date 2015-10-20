@@ -24,6 +24,24 @@
             background-color: $lightgrey
             border-left-color: $darkblue
             color: $black
+         a.developer-page-link
+            padding-left: 30px
+            &:before
+               position: relative
+               content: '-- '
+               display: inline-block
+               right: 8px
+   &.scrolling-mode
+      position: fixed
+      top: -24px
+      right: 0
+      height: 100%
+      .lang-switcher
+         display: none
+      a:not(.developer-page-link)
+         display: none
+      a.developer-guides-link
+         display: block
 
 .lang-switcher
    md-select
