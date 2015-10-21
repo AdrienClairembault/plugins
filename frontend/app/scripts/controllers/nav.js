@@ -28,7 +28,7 @@ angular.module('frontendApp')
             var sidebar = $('.sidebar');
             var main = $('.main');
             
-            if (toState.name == 'developerguides') {
+            if (toState.name == 'guides') {
                jqueryWindow.scroll(function() {
                   var h = jqueryWindow.scrollTop();
                   if (h > 370 && !sidebar.hasClass('scrolling-mode')) {
@@ -40,6 +40,7 @@ angular.module('frontendApp')
                   }
                });
             } else {
+               $rootScope.scrollModeLinks = [];
                jqueryWindow.off('scroll');
                if (sidebar.hasClass('scrolling-mode')) {
                   sidebar.removeClass('scrolling-mode');

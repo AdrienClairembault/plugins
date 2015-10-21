@@ -66,20 +66,15 @@
                         </md-option>
                      </md-select>
                   </div>
+
                   <a ui-sref="featured" ui-sref-active="active">{{'NAV_FEATURED'|translate}}</a>
                   <a ui-sref="all" ui-sref-active="active">{{'NAV_ALLPLUGINS'|translate}}</a>
                   <a ng-click="$root.focusSearch=true" ui-sref="search" ui-sref-active="active">{{'NAV_SEARCH'|translate}}</a>
                   <a ui-sref="submit" ui-sref-active="active">{{'NAV_SUBMIT_A_PLUGIN'|translate}}</a>
                   <a ui-sref="contact" ui-sref-active="active">{{'NAV_CONTACT'|translate}}
                   </a>
-                  <a class="developer-guides-link" ui-sref="developerguides" ui-sref-active="active">{{'NAV_DEVELOPER_GUIDES'|translate}}</a>
-                  <a class="developer-page-link">Truc</a>
-                  <a class="developer-page-link">Truc</a>
-                  <a class="developer-page-link">Truc</a>
-                  <a class="developer-page-link">Truc</a>
-                  <a class="developer-page-link">Truc</a>
-                  <a class="developer-page-link">Truc</a>
-                  <a class="developer-page-link">Truc {{$state.current}}</a>
+                  <a ui-sref="guides" ui-sref-active="active">{{'NAV_GUIDES'|translate}}</a>
+                  <a ng-repeat="link in scrollModeLinks" class="scrollmode-link" ng-class="link.sublink ? 'sub' : ''">{{link.text}}</a>
                </nav>
             </md-sidenav>
             <md-button class="md-icon-button toggle_menu" hide-gt-md aria-label="Toggle Menu" ng-click="toggleNavBar()">
