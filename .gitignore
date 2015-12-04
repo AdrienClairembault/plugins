@@ -11,3 +11,15 @@ api/config.php
 /frontend/app/scripts/conf.js
 /misc/illuminate_queries.log
 .vagrant
+/public/404.html
+/public/docs
+/public/favicon.ico
+/public/flags
+/public/fonts
+/public/images
+/public/index.html
+/public/robots.txt
+/public/scripts
+/public/styles
+/public/favicon.ico
+/public/robots.txt
