@@ -302,7 +302,7 @@ module.exports = function (grunt) {
     uncss: {
       dist: {
         options: {
-          csspath: '../.tmp',
+          csspath: '../frontend/.tmp',
           stylesheets: ['../.tmp/styles/main.css'],
           ignore: ['.ng-move', '.ng-enter', '.ng-leave', '.created_by_jQuery']
         },
