@@ -11,6 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/api', ['middleware' => ['authorization'],
+		   			'as' => 'home',
+				    function () {
+		    	    	return view('welcome');
+				    }
+]);
