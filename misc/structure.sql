@@ -117,20 +117,6 @@ CREATE TABLE plugin_author(
 CREATE INDEX idx_plugin_author_plugin ON plugin_author(plugin_id);
 CREATE INDEX idx_plugin_author_author ON plugin_author(author_id);
 
-CREATE TABLE plugin_contributor(
-   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-   plugin_id INT,
-   user_id INT,
-   FOREIGN KEY (plugin_id)
-      REFERENCES plugin(id)
-      ON DELETE CASCADE,
-   FOREIGN KEY (user_id)
-      REFERENCES user(id)
-      ON DELETE CASCADE
-) ENGINE=InnoDB;
-CREATE INDEX idx_plugin_contributor_plugin ON plugin_contributor(plugin_id);
-CREATE INDEX idx_plugin_contributor_user ON plugin_contributor(userpuser_id);
-
 CREATE TABLE tag(
    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
    `key` VARCHAR(255),
@@ -186,7 +172,7 @@ CREATE TABLE plugin_plugin_lang(
       ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
-CREATE TABLE plugin_permission (
+CREATE TABLE plugin_status (
    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
    plugin_id INT NOT NULL,
    user_id INT NOT NULL,
@@ -194,6 +180,7 @@ CREATE TABLE plugin_permission (
    allowed_refresh_xml INT(1),
    allowed_change_xml_url INT(1),
    allowed_notifications INT(1),
+   contributor INT(1),
    FOREIGN KEY (user_id)
       REFERENCES user(id)
       ON DELETE CASCADE,

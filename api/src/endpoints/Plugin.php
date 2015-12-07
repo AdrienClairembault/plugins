@@ -70,7 +70,7 @@ $single_authormode_view = Tool::makeEndpoint(function($key) use($app) {
    $user = OAuthHelper::currentlyAuthed();
 
    // get plugin
-   $plugin = Plugin::with('descriptions', 'versions', 'screenshots', 'tags', 'permissions', 'authors')
+   $plugin = Plugin::with('descriptions', 'versions', 'screenshots', 'tags', 'statuses', 'authors')
                   ->short()
                   ->withAverageNote()
                   ->withNumberOfVotes()
@@ -81,7 +81,7 @@ $single_authormode_view = Tool::makeEndpoint(function($key) use($app) {
    if (!$plugin) {
       throw new ResourceNotFound('Plugin', $key);
    }
-   if (!$plugin->permissions()
+   if (!$plugin->statuses()
                ->where('user_id', '=', $user->id)
                ->where(function($q) {
                   return $q->where('admin', '=', true)
@@ -130,7 +130,7 @@ $single_authormode_edit = Tool::makeEndpoint(function($key) use($app) {
    //    + user has the admin flag on the plugin
    // or + user has the change_xml_url flag on the plugin
    // otherwise reject
-   if (!$plugin->permissions()
+   if (!$plugin->statuses()
                ->where(function($q) {
                   return $q->where('admin', '=', true)
                            ->orWhere('allowed_change_xml_url', '=', true);
@@ -209,14 +209,14 @@ $plugin_view_permissions = Tool::makeEndpoint(function($key) use ($app) {
 
    // verify user has the admin flag on the plugin
    // otherwise reject
-   if (!$plugin->permissions()
+   if (!$plugin->statuses()
                ->where('admin', '=', true)
                ->where('user_id', '=', $user->id)
                ->first()) {
       throw new LackPermission('Plugin', $key, $user->username, 'manage_permissions');
    }
 
-   Tool::endWithJson($plugin->permissions);
+   Tool::endWithJson($plugin->statuses);
 });
 
 $plugin_add_permission = Tool::makeEndpoint(function($key) use($app) {
@@ -228,7 +228,7 @@ $plugin_add_permission = Tool::makeEndpoint(function($key) use($app) {
    if (!$plugin) {
       throw new ResourceNotFound('Plugin', $key);
    }
-   if (!$plugin->permissions()
+   if (!$plugin->statuses()
                ->where('admin', '=', true)
                ->where('user_id', '=', $user->id)
                ->first()) {
@@ -247,11 +247,11 @@ $plugin_add_permission = Tool::makeEndpoint(function($key) use($app) {
       throw new ResourceNotFound('User', $body->username);
    }
 
-   if ($plugin->permissions->find($target_user)) {
+   if ($plugin->statuses->find($target_user)) {
       throw new RightAlreadyExist($body->username, $plugin->key);
    }
 
-   $plugin->permissions()->attach($target_user);
+   $plugin->statuses()->attach($target_user);
    $app->halt(200);
 });
 
@@ -266,7 +266,7 @@ $plugin_delete_permission = Tool::makeEndpoint(function($key, $username) use($ap
    }
 
    // reject if target_user not found
-   $target_user = $plugin->permissions()->where('username', '=', $username)->first();
+   $target_user = $plugin->statuses()->where('username', '=', $username)->first();
    if (!$target_user) {
       throw new RightDoesntExist($username, $key);
    }
@@ -275,7 +275,7 @@ $plugin_delete_permission = Tool::makeEndpoint(function($key, $username) use($ap
    // for another user,
    // we require him to be admin of the plugin
    if ($target_user->id != $user->id) { 
-      $user = $plugin->permissions->find($user);
+      $user = $plugin->statuses->find($user);
       if (!$user ||
           !$user->pivot->admin) {
          throw new LackPermission('Plugin', $key, $username, 'manage_permissions');
@@ -288,7 +288,7 @@ $plugin_delete_permission = Tool::makeEndpoint(function($key, $username) use($ap
 
    // if everything is OK we clear
    // the permission
-   $plugin->permissions()->detach($target_user);
+   $plugin->statuses()->detach($target_user);
 
    $app->halt(200);
 });
@@ -319,7 +319,7 @@ $plugin_modify_permission = Tool::makeEndpoint(function($key, $username) use($ap
    }
 
    // Verify user is admin on the plugin
-   if (!$plugin->permissions()
+   if (!$plugin->statuses()
               ->where('admin', '=', true)
               ->where('user_id', '=', $user->id)
               ->first()) {
@@ -328,7 +328,7 @@ $plugin_modify_permission = Tool::makeEndpoint(function($key, $username) use($ap
 
    // verify username has the username has a right
    // for the plugin
-   if (!($target_user = $plugin->permissions()
+   if (!($target_user = $plugin->statuses()
                         ->where('username', '=', $username)
                         ->first())) {
       throw new RightDoesntExist($username, $plugin->key);
@@ -349,7 +349,7 @@ $plugin_refresh_xml = Tool::makeEndpoint(function($key) use($app) {
    }
 
    // Verify user is admin on the plugin
-   if (!$plugin->permissions()
+   if (!$plugin->statuses()
                ->where(function($q) {
                   return $q->where('admin', '=', true)
                            ->orWhere('allowed_refresh_xml', '=', true);

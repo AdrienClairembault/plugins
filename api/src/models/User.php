@@ -36,9 +36,9 @@ class User extends Model {
       return $this->hasMany('\API\Model\Session', 'owner_id');
    }
    // Plugins user has right onto
-   public function pluginPermissions() {
-      return $this->belongsToMany('\API\Model\Plugin', 'plugin_permission', 'user_id')
-                  ->withPivot('admin', 'allowed_refresh_xml', 'allowed_change_xml_url', 'allowed_notifications');
+   public function pluginStatuses() {
+      return $this->belongsToMany('\API\Model\Plugin', 'plugin_status', 'user_id')
+                  ->withPivot('admin', 'allowed_refresh_xml', 'allowed_change_xml_url', 'allowed_notifications', 'contributor');
    }
 
    // Setters

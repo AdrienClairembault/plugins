@@ -50,9 +50,9 @@ class Plugin extends Model {
       return $this->hasMany('\API\Model\PluginWatch');
    }
 
-   public function permissions() {
-      return $this->belongsToMany('\API\Model\User', 'plugin_permission', 'plugin_id')
-                  ->withPivot('admin', 'allowed_refresh_xml', 'allowed_change_xml_url', 'allowed_notifications');
+   public function statuses() {
+      return $this->belongsToMany('\API\Model\User', 'plugin_status', 'plugin_id')
+                  ->withPivot('admin', 'allowed_refresh_xml', 'allowed_change_xml_url', 'allowed_notifications', 'contributor');
    }
 
    // Scopes
