@@ -18,5 +18,22 @@ foreach ($authors as $author) {
 		$fromAuthor = true;
 	}
 
-	
+	if ($fromAuthor) {
+      $plugins = DB::table('plugin_author')
+                   ->where('author_id', '=', $author->id)
+                   ->get();
+
+   } else {
+      $plugins = DB::table('');
+      // move out of plugin_author every
+      // entry that is already 
+   }
+
+   foreach ($plugins as $plugin) {
+      DB::table('plugin_contributor')
+        ->insert([
+            'plugin_id' => $plugin->id,
+            'user_id' => $user->id
+         ]);
+   }
 }
