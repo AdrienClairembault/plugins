@@ -337,3 +337,12 @@ CREATE TABLE plugin_xml_fetch_fails(
       ON DELETE CASCADE
 );
 CREATE INDEX idx_plugin_xml_fetch_fails_plugin_id ON plugin_xml_fetch_fails(plugin_id);
+
+CREATE TABLE featured(
+   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   plugin_id INT,
+   FOREIGN KEY (plugin_id)
+      REFERENCES plugin(id)
+      ON DELETE CASCADE
+) ENGINE=InnoDB;
+CREATE INDEX idx_plugin_featuredn ON featured(plugin_id);

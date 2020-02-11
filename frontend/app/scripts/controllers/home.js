@@ -8,7 +8,7 @@
  * Controller of the frontendApp
  */
 angular.module('frontendApp')
-   .controller('FeaturedCtrl', ['API_URL', '$http', '$rootScope', '$scope', '$timeout',
+   .controller('HomeCtrl', ['API_URL', '$http', '$rootScope', '$scope', '$timeout',
       function(apiUrl, $http, $rootScope, $scope, $timeout) {
          if ($rootScope.currentSearch !== null) {
             $timeout.cancel($rootScope.currentSearch)
@@ -22,6 +22,14 @@ angular.module('frontendApp')
          })
          .success(function(data, status, headers, config) {
             $scope.trending = data;
+         });
+
+         $http({
+            method: 'GET',
+            url: apiUrl + '/plugin/featured'
+         })
+         .success(function(data, status, headers, config) {
+            $scope.featured = data;
          });
 
          $http({
