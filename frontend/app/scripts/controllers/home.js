@@ -18,7 +18,10 @@ angular.module('frontendApp')
 
          $http({
             method: 'GET',
-            url: apiUrl + '/plugin/trending'
+            url: apiUrl + '/plugin/trending',
+            headers: {
+               'X-Range': '0-9'
+            }
          })
          .success(function(data, status, headers, config) {
             $scope.trending = data;
@@ -26,7 +29,10 @@ angular.module('frontendApp')
 
          $http({
             method: 'GET',
-            url: apiUrl + '/plugin/featured'
+            url: apiUrl + '/plugin/featured',
+            headers: {
+               'X-Range': '0-9'
+            }
          })
          .success(function(data, status, headers, config) {
             $scope.featured = data;
@@ -34,7 +40,10 @@ angular.module('frontendApp')
 
          $http({
             method: 'GET',
-            url: apiUrl + '/plugin/popular'
+            url: apiUrl + '/plugin/popular',
+            headers: {
+               'X-Range': '0-9'
+            }
          })
          .success(function(data, status, headers, config) {
             $scope.popular = data;
@@ -42,7 +51,10 @@ angular.module('frontendApp')
 
          $http({
             method: 'GET',
-            url: apiUrl + '/plugin/updated'
+            url: apiUrl + '/plugin/updated',
+            headers: {
+               'X-Range': '0-9'
+            }
          })
          .success(function(data, status, headers, config) {
             $scope.updated = data;
@@ -50,7 +62,10 @@ angular.module('frontendApp')
 
          $http({
             method: 'GET',
-            url: apiUrl + '/plugin/new'
+            url: apiUrl + '/plugin/new',
+            headers: {
+               'X-Range': '0-9'
+            }
          })
          .success(function(data, status, headers, config) {
             $scope.new = data;
@@ -68,14 +83,6 @@ angular.module('frontendApp')
          getTags();
          $scope.$on('languageChange', function() {
             getTags();
-         });
-
-         $http({
-            method: 'GET',
-            url: apiUrl + '/author/top'
-         })
-         .success(function(data, status, headers, config) {
-            $scope.authors = data;
          });
 
 

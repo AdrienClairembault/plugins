@@ -412,9 +412,11 @@ $all = Tool::makeEndpoint(function() use($app) {
 $popular = Tool::makeEndpoint(function() use($app) {
    OAuthHelper::needsScopes(['plugins']);
 
-   $popular_plugins = Plugin::popularTop(10)
-                            ->where('active', '=', 1)
-                            ->get();
+   $popular_plugins = Tool::paginateCollection(
+      Plugin::popularTop()
+         ->where('active', '=', 1)
+   );
+
    Tool::endWithJson($popular_plugins);
 });
 
@@ -425,9 +427,10 @@ $popular = Tool::makeEndpoint(function() use($app) {
 $trending = Tool::makeEndpoint(function() use($app) {
    OAuthHelper::needsScopes(['plugins']);
 
-   $trending_plugins = Plugin::trendingTop(10)
-                             ->where('active', '=', 1)
-                             ->get();
+   $trending_plugins = Tool::paginateCollection(
+      Plugin::trending()
+         ->where('active', '=', 1)
+   );
    Tool::endWithJson($trending_plugins);
 });
 
@@ -438,16 +441,18 @@ $trending = Tool::makeEndpoint(function() use($app) {
 $updated = Tool::makeEndpoint(function() use($app) {
    OAuthHelper::needsScopes(['plugins']);
 
-   $updated_plugins = Plugin::updatedRecently(10)
-                            ->where('active', '=', 1)
-                            ->get();
+   $updated_plugins = Tool::paginateCollection(
+      Plugin::updatedRecently()
+         ->where('active', '=', 1)
+   );
    Tool::endWithJson($updated_plugins);
 });
 // rss endpoint
 $rss_updated = Tool::makeEndpoint(function() use($app) {
-   $updated_plugins = Plugin::updatedRecently(30)
-                            ->where('active', '=', 1)
-                            ->get();
+   $updated_plugins = Tool::paginateCollection(
+      Plugin::updatedRecently()
+         ->where('active', '=', 1)
+   );
    Tool::endWithRSS($updated_plugins, "Updated plugins");
 });
 
@@ -458,16 +463,18 @@ $rss_updated = Tool::makeEndpoint(function() use($app) {
 $new = Tool::makeEndpoint(function() use($app) {
    OAuthHelper::needsScopes(['plugins']);
 
-   $new_plugins = Plugin::mostFreshlyAddedPlugins(10)
-                       ->where('active', '=', 1)
-                       ->get();
+   $new_plugins = Tool::paginateCollection(
+      Plugin::mostFreshlyAddedPlugins()
+         ->where('active', '=', 1)
+   );
    Tool::endWithJson($new_plugins);
 });
 // rss endpoint
 $rss_new = Tool::makeEndpoint(function() use($app) {
-   $new_plugins = Plugin::mostFreshlyAddedPlugins(30)
-                       ->where('active', '=', 1)
-                       ->get();
+   $new_plugins = Tool::paginateCollection(
+      Plugin::mostFreshlyAddedPlugins()
+         ->where('active', '=', 1)
+   );
    Tool::endWithRSS($new_plugins, "New Plugins");
 });
 
@@ -478,9 +485,10 @@ $rss_new = Tool::makeEndpoint(function() use($app) {
 $featured = Tool::makeEndpoint(function() use($app) {
    OAuthHelper::needsScopes(['plugins']);
 
-   $featured_plugins = Plugin::featuredPlugins(10)
-                       ->where('active', '=', 1)
-                       ->get();
+   $featured_plugins = Tool::paginateCollection(
+      Plugin::featuredPlugins()
+         ->where('active', '=', 1)
+   );
    Tool::endWithJson($featured_plugins);
 });
 

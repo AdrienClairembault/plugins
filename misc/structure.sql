@@ -90,6 +90,7 @@ CREATE TABLE plugin_download (
       REFERENCES plugin(id)
 ) ENGINE=InnoDB;
 CREATE INDEX idx_plugin_download_id ON plugin_download(plugin_id);
+CREATE INDEX idx_plugin_download_downloaded_at ON plugin_download(downloaded_at);
 
 CREATE TABLE plugin_description(
    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
